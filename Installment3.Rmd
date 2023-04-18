@@ -1,0 +1,51 @@
+---
+title: "Installment 3 - ADV R"
+author: "Jennifer Vance"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(kableExtra)
+library(usethis)
+library(devtools)
+library(roxygen2)
+
+#generate x and y
+#and set alpha
+set.seed(21)
+x <-rnorm(30,5,2)
+set.seed(23)
+y<- rnorm(30,3,2)
+alpha <- 0.05
+
+obj = Inst3:::tConstr(x=x, y=y, alpha=alpha)
+
+#create print.Rttest setup
+
+print.Rttest = function(funObject){
+  kFO = kable(funObject$Data)
+  z = NextMethod(kFO)
+  class(z) = c("Rttest", class(z))
+  kFO
+}
+#create plot.Rttest setup
+plot.Rttest = function(funObject){
+  plotT = plot(x,y)
+  pt = NextMethod(plotT)
+  class(pt) = c("Rttest", class(pt))
+  plotT
+}
+
+#change class to Rttest
+attr(obj, "class") ="Rttest"
+
+#call function object parts
+class(obj)
+print(obj)
+```
+
