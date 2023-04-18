@@ -1,23 +1,25 @@
 #' Title t-test
 #'
-#' @param x
-#' @param y
-#' @param alpha
-#' @param independent
-#' @param equalVar
+#' @param x numeric vector x
+#' @param y numeric vector y
+#' @param alpha numeric value (error rate)
+#' @param independentSamp Is independent
+#' @param equalVar Is var equal
 #'
-#' @return
+#' @return t-test for supplied variables
 #' @export
 #'
 #' @examples
-tConstr = function(x, y, alpha, independent = TRUE, equalVar = TRUE){
+#' \dontrun{tConstr(x=x, y=y, alpha=alpha)}
+#'
+tConstr = function(x, y, alpha, independentSamp = TRUE, equalVar = TRUE){
 
-  if(independent=TRUE && equalVar = TRUE){
-  #run the t-test with equal var
+  if(independentSamp==TRUE && equalVar == TRUE){
+    #run the t-test with equal var
     ttest = t.test(x, y, var.equal = TRUE)
   }
-  else if(independent=TRUE && equalVar=FALSE){
-  #run the t-test with unequal var
+  else if(independentSamp==TRUE && equalVar==FALSE){
+    #run the t-test with unequal var
     ttest = t.test(x, y, var.equal = TRUE)
   }
   else{
@@ -25,7 +27,7 @@ tConstr = function(x, y, alpha, independent = TRUE, equalVar = TRUE){
   }
   #create the data frame of x and y
   #x and y won't always be the same length and may return an error
-  #check the lengths of x and y and make corrections to lenght if needed with NA values
+  #check the lengths of x and y and make corrections to length if needed with NA values
   if(length(x)==length(y)){
     df = data.frame(x = x, y = y)
   }
